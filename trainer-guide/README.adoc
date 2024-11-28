@@ -20,38 +20,48 @@ Underline the following features:
 
 [WARNING]
 --
-No compact constructor at this point
+* Take care to mention the default implementation of equals, hashcode and toString
+* A record is no longer completely immutable if it has an object parameter
+* At this point, talk about compact constructors only if it has been used by trainees, and make sure it's well understood. 
 --
 
 === Add `RoyalSuitCard` and `NumberSuitCard` as records inheriting from `SuitCard`
 
-Again asking more from the type system: a suit card with en index lower than 10 should not have a face, and vice versa. This should NOT be a control in a constructor, this should be ensured by the compiler
+Again asking more from the type system: a suit card with an index lower than 10 should not have a face, and vice versa. This should NOT be a control in a constructor, this should be ensured by the compiler
 
 [WARNING]
 --
-No compact constructor at this point
+- The `SuitCard` class is to become an interface with only one method `Color color();`.
+- Make sure that no constraint is lost during the process
+- Take care to mention that a record cannot be extended because it's final
+- At this point, talk about compact constructors only if it has been used by trainees, and make sure it's well understood.
 --
 
 === Constrain `TrumpCard`, `RoyalPlayingCard` and `NumberPlayingCard` :
-* Constraints :
+
+Make sure the correlation between the `Face` and its index is guaranteed by the compiler itself.
+
+* Constraints at this point :
+** `RoyalPlayingCard` 's `Color` and `Face` cannot be `null` : use compact constructors by now
 ** `NumberPlayingCard` has no `Face`
-** `RoyalPlayingCard` 's index is correlated to its `Face`
-** `RoyalPlayingCard` 's `Color` and `Face` cannot be `null` (compact constructor)
-** `NumberPlayingCard` 's `Color` and `Index` cannot be `null` and the `Index` must be between 1 and 10 (included)
-** `TrumpCard` 's `Index` must be between 0 and 21 (included)
+** `TrumpCard` 's `Index` must be between 0 and 21
+** `NumberPlayingCard` 's `Color` and `Index` cannot be `null` and the `Index` must be between 1 and 10
+** `RoyalPlayingCard` 's index is correlated to its `Face` : think about adding the index in the `Face` enum
+
+Uncomment the tests, they should pass by now.
 
 === Showing the limitation of open heritage
 
-Ask for a `Joker` class inheriting from `PlayingCard`
+Ask for an hypothetical `Joker` class inheriting from `PlayingCard`
 
-Display it using `PrettyPrinter` and observe the potential issue.
+Display it using `PrettyPrinter` and observe the potential issue. 
 
 == Step 2: Introducing sealed interfaces
 
 Start solving the *Joker case*:
 
 * Explain the sealed interface hierarchie represent a close world, or at least explicit their extension points.
-* Constrain `PlayingCard` to be either a `SuitCard` or a `TrumpCard` using a sealed interface (`Joker` may be removed at this point)
+* Constrain `PlayingCard` to be either a `SuitCard` or a `TrumpCard` using a sealed interface 
 * Make `SuitCard` a sealed interface as well
 
 == Step 3: Introducing pattern matching
@@ -61,18 +71,14 @@ All this part takes place in the `PrettyPrinter` class.
 Clean the `PrettyPrinter` (step by step) :
 
 * Use pattern matching in the `instanceof` expression +
-Don't forget to point that `"".formated()` is a thing now.
-* Mutate the switch to a statement, ie `var result = switch(playingCard) { ... }`
+Don't forget to point that `"".formatted()` is a thing now.
+* Mutate the switch to an expression, ie `var result = switch(playingCard) { case x : { yield ... }}`
 * Introduce switch on types. +
 The `toString` method is now a giant switch.
 * Introduce guarded case patterns, ie `case NumberPlayingCard card when card.index() == 1 ->`
-* Add destructuration to the switch,ie `case TrumpCard(Integer idx) ->`)
+* Add destructuration to the switch,ie `case TrumpCard(Integer idx) ->` or `case NumberSuitCard(Integer idx, _) ->`
 
 [WARNING]
 --
-No more `default` case is needed in the end because the switch won't compile if all cases aren't covered
+No more `default` case is needed in the end because the switch won't compile if all cases aren't covered when using sealed types. 
 --
-
-== Uncomment tests
-
-They shall pass \o/

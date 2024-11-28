@@ -6,8 +6,8 @@ public class TrumpCard implements PlayingCard {
     private final Integer index;
 
     public TrumpCard(Integer index) {
-        if (index == null || index < 0 || index > 22)
-            throw new IndexOutOfBoundsException("Index must be positive and lesser than 22.");
+        if (index == null || index < 0 || index >= 22)
+            throw new IndexOutOfBoundsException("Index must be positive and smaller than 22.");
         this.index = index;
     }
     
@@ -28,12 +28,5 @@ public class TrumpCard implements PlayingCard {
     @Override
     public int hashCode() {
         return Objects.hashCode(index);
-    }
-
-    @Override
-    public String toString() {
-        return "TrumpCard{" +
-                "index=" + index +
-                '}';
     }
 }

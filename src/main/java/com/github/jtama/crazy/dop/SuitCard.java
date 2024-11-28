@@ -11,7 +11,7 @@ public class SuitCard implements PlayingCard {
         if (color == null)
             throw new IllegalArgumentException("Color must not be null.");
         if (index == null)
-            throw new IllegalArgumentException("Color must not be null.");
+            throw new IllegalArgumentException("Index must not be null.");
         if (index < 1)
             throw new IndexOutOfBoundsException("Index must be positive.");
         if (index > 15)
@@ -51,12 +51,4 @@ public class SuitCard implements PlayingCard {
         return Objects.hash(color, index, face);
     }
 
-    @Override
-    public String toString() {
-        return "SuitCard{" +
-                "color=" + color +
-                ", index=" + index +
-                ", face=" + face +
-                '}';
-    }
 }

@@ -5,6 +5,34 @@ Big UP to https://github.com/bobocode-projects/java-fundamentals-exercises[boboc
 
 == Cheat sheet
 
+
+=== Declaring a record
+
+[source,java]
+----
+public record FooFighter(String name, Instrument instrument, String yearsActive){
+
+}
+----
+
+==== Compact constructor
+
+[source,java]
+----
+import java.util.Objects;
+
+public record FooFighter(String name, Instrument instrument, String yearsActive){
+
+    public FooFighter {
+        Objects.requireNonNull(name);
+        Objects.requireNonNull(yearsActive);
+    }
+
+}
+----
+
+==== Beware of mutable properties
+
 === Sealed interface
 
 ==== Declaring a sealed interface
@@ -45,33 +73,6 @@ public non-sealed interface Bar extends Foo {
 
 
 
-=== Declaring a record
-
-[source,java]
-----
-public record FooFighter(String name, Instrument instrument, String yearsActive){
-
-}
-----
-
-==== Compact constructor
-
-[source,java]
-----
-import java.util.Objects;
-
-public record FooFighter(String name, Instrument instrument, String yearsActive){
-
-    public FooFighter {
-        Objects.requireNonNull(name);
-        Objects.requireNonNull(yearsActive);
-    }
-
-}
-----
-
-==== Beware of mutable properties
-
 === Switch expression (opposed to Switch statement)
 
 [source,java]
@@ -111,6 +112,16 @@ return switch (value) {
 }
 ----
 
+==== With a "when"
+
+[source,java]
+----
+return switch (value) {
+    case Foo foo -> foo.foo();
+    case Fighter fighter when fighter.name().startsWith("Dave") -> "Grohl !!!!!";
+}
+----
+
 ==== Using deconstruction
 
 [source,java]
@@ -121,14 +132,6 @@ return switch (value) {
 }
 ----
 
-==== With a "when"
 
-[source,java]
-----
-return switch (value) {
-    case Foo foo -> foo.foo();
-    case Fighter fighter when fighter.name().startsWith("Dave") -> "Grohl !!!!!";
-}
-----
 
 
