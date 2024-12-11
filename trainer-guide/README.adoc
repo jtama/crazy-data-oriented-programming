@@ -27,6 +27,11 @@ Underline the following features:
 
 === Add `RoyalSuitCard` and `NumberSuitCard` as records inheriting from `SuitCard`
 
+[plantuml]
+----
+include::playing_card_inheritance_diagram.puml[]
+----
+
 Again asking more from the type system: a suit card with an index lower than 10 should not have a face, and vice versa. This should NOT be a control in a constructor, this should be ensured by the compiler
 
 [WARNING]

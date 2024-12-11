@@ -1,0 +1,33 @@
+@startuml
+
+
+interface PlayingCard{
+
+index()
+}
+
+class SuitCard{
+index()
+color()
+}
+
+class RoyalSuitCard {
+face()
+index()
+color()
+}
+class   NumberSuitCard {
+index()
+color()
+}
+
+PlayingCard <|-- SuitCard
+SuitCard <|-- RoyalSuitCard
+SuitCard <|-- NumberSuitCard
+
+
+hide SuitCard circle
+hide RoyalSuitCard circle
+hide NumberSuitCard circle
+
+@enduml
