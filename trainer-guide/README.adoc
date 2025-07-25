@@ -22,7 +22,7 @@ Underline the following features:
 --
 * Take care to mention the default implementation of equals, hashcode and toString
 * A record is no longer completely immutable if it has an object parameter
-* At this point, talk about compact constructors only if it has been used by trainees, and make sure it's well understood. 
+* At this point, talk about compact constructors only if it has been used by trainees, and make sure it's well understood.
 --
 
 === Add `RoyalSuitCard` and `NumberSuitCard` as records inheriting from `SuitCard`
@@ -53,37 +53,38 @@ Make sure the correlation between the `Face` and its index is guaranteed by the 
 ** `NumberPlayingCard` 's `Color` and `Index` cannot be `null` and the `Index` must be between 1 and 10
 ** `RoyalPlayingCard` 's index is correlated to its `Face` : think about adding the index in the `Face` enum
 
-Uncomment the tests, they should pass by now.
+Uncomment the tests, they should pass by now. \o/
+You have your safeguard.
 
 === Showing the limitation of open heritage
 
 Ask for an hypothetical `Joker` class inheriting from `PlayingCard`
 
-Display it using `PrettyPrinter` and observe the potential issue. 
+Display it using `AdviceGiver` and observe the potential issue.
 
 == Step 2: Introducing sealed interfaces
 
 Start solving the *Joker case*:
 
 * Explain the sealed interface hierarchie represent a close world, or at least explicit their extension points.
-* Constrain `PlayingCard` to be either a `SuitCard` or a `TrumpCard` using a sealed interface 
+* Constrain `PlayingCard` to be either a `SuitCard` or a `TrumpCard` using a sealed interface
 * Make `SuitCard` a sealed interface as well
 
 == Step 3: Introducing pattern matching
 
-All this part takes place in the `PrettyPrinter` class.
+All this part takes place in the `AdviceGiver` class.
 
-Clean the `PrettyPrinter` (step by step) :
+Clean the `AdviceGiver` (step by step) :
 
 * Use pattern matching in the `instanceof` expression +
 Don't forget to point that `"".formatted()` is a thing now.
 * Mutate the switch to an expression, ie `var result = switch(playingCard) { case x : { yield ... }}`
 * Introduce switch on types. +
-The `toString` method is now a giant switch.
+The `advice` method is now a giant switch.
 * Introduce guarded case patterns, ie `case NumberPlayingCard card when card.index() == 1 ->`
 * Add destructuration to the switch,ie `case TrumpCard(Integer idx) ->` or `case NumberSuitCard(Integer idx, _) ->`
 
 [WARNING]
 --
-No more `default` case is needed in the end because the switch won't compile if all cases aren't covered when using sealed types. 
+No more `default` case is needed in the end because the switch won't compile if all cases aren't covered when using sealed types.
 --

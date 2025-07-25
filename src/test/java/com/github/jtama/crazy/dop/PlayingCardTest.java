@@ -32,7 +32,7 @@ class PlayingCardTest {
 //    @ParameterizedTest(name = "Validate for {0}")
 //    @MethodSource("cardProvider")
 //    void testCardDisplay(PlayingCard card, String expected) {
-//        assertThat(PrettyPrinter.toString(card)).isEqualTo(expected);
+//        assertThat(PrettyPrinter.advices(card)).isEqualTo(expected);
 //    }
 
     static Stream<Arguments> numberSuitInputs() {

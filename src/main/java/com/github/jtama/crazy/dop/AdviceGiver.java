@@ -3,16 +3,16 @@ package com.github.jtama.crazy.dop;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PrettyPrinter {
+public class AdviceGiver {
 
-    public static String toString(List<PlayingCard> cards) {
+    public static String advices(List<PlayingCard> cards) {
         return cards.stream()
-                .map(PrettyPrinter::toString)
+                .map(AdviceGiver::advice)
                 .collect(Collectors.joining("," + System.lineSeparator()));
     }
 
 
-    public static String toString(PlayingCard playingCard) {
+    public static String advice(PlayingCard playingCard) {
         if (playingCard instanceof SuitCard) {
             SuitCard suitCard = (SuitCard) playingCard;
             if (null != suitCard.face()) {
