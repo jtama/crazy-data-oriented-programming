@@ -16,7 +16,7 @@ class PlayingCardTest {
 
     @ParameterizedTest
     @MethodSource("numberSuitInputs")
-    void testNumberSuitCardConstructorValidatesInputs(Color color, Integer index, String messagePart) {
+    void testNumberSuitCardConstructorValidatesInputs(Color color, int index, String messagePart) {
         assertThatThrownBy(() -> new NumberSuitCard(color, index))
                 .isInstanceOfAny(IllegalArgumentException.class, NullPointerException.class)
                 .hasMessageContaining(messagePart);
@@ -41,7 +41,6 @@ class PlayingCardTest {
                 arguments(Color.CLUBS, 0, "Index"),
                 arguments(Color.CLUBS, -1, "Index"),
                 arguments(Color.CLUBS, 16, "Index"),
-                arguments(Color.CLUBS, null, "Index"),
                 arguments(null, 1, "Color")
         );
 

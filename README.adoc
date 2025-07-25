@@ -38,7 +38,7 @@ public record FooFighter(String name, Instrument instrument, Integer yearsActive
 ====
 
 . Records are only immutable if their properties are immutable (👀 we see you object with setters, collections and all the others...), otherwise you'll have to add
- protections (copy on write, etc).
+protections (copy on write, etc).
 . No one told you record had to be dumb 🧠 ...
 
 ====
