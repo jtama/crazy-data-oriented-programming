@@ -60,7 +60,7 @@ You have your safeguard.
 
 Ask for an hypothetical `Joker` class inheriting from `PlayingCard`
 
-Display it using `AdviceGiver` and observe the potential issue.
+Display it using `GrohlOMeter` and observe the potential issue.
 
 == Step 2: Introducing sealed interfaces
 
@@ -72,9 +72,9 @@ Start solving the *Joker case*:
 
 == Step 3: Introducing pattern matching
 
-All this part takes place in the `AdviceGiver` class.
+All this part takes place in the `GrohlOMeter` class.
 
-Clean the `AdviceGiver` (step by step) :
+Clean the `GrohlOMeter` (step by step) :
 
 * Use pattern matching in the `instanceof` expression +
 Don't forget to point that `"".formatted()` is a thing now.

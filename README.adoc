@@ -1,27 +1,30 @@
-= Crazy data-oriented programming
+:warning-caption: 💀
+:important-caption: 💡
+
+= Cheat sheet
 
 Big UP to https://github.com/bobocode-projects/java-fundamentals-exercises[bobocode-projects] and their marvelous exercises. This is a missing part.
 
+== Record
 
-== Cheat sheet
+Records are final, immutable^Or so they say^, provide `getters`, `toString`, `equals` and `hashcode`
 
-
-=== Declaring a record
+== Declaring a record
 
 [source,java]
 ----
-public record FooFighter(String name, Instrument instrument, String yearsActive){
+public record FooFighter(String name, Instrument instrument, Integer yearsActive){
 
 }
 ----
 
-==== Compact constructor
+=== Compact constructor
 
 [source,java]
 ----
 import java.util.Objects;
 
-public record FooFighter(String name, Instrument instrument, String yearsActive){
+public record FooFighter(String name, Instrument instrument, Integer yearsActive){
 
     public FooFighter {
         Objects.requireNonNull(name);
@@ -31,61 +34,78 @@ public record FooFighter(String name, Instrument instrument, String yearsActive)
 }
 ----
 
-==== Beware of mutable properties
+[IMPORTANT]
+====
 
-=== Sealed interface
+. Records are only immutable if their properties are immutable (👀 we see you object with setters, collections and all the others...), otherwise you'll have to add
+ protections (copy on write, etc).
+. No one told you record had to be dumb 🧠 ...
 
-==== Declaring a sealed interface
+====
+
+
+== Sealed interface
+
+=== Declaring a sealed interface
 
 [source,java]
 ----
-public sealed interface Foo permits Fighters, Bar {
-    String foo();
+import java.time.LocalDate;
+
+public sealed interface FooFighter permits Current, Past {
+    LocalDate startDate();
 }
 ----
 
-==== Implementing a sealed interface
+=== Implementing a sealed interface
 
 Can be done with either a `final` class, a sealed
 
 [source,java]
 ----
-public final class Bar implements Foo {
-    public String foo() {
-        return "Bar";
+import java.time.LocalDate;
+
+public final class Past implements FooFighter {
+    public LocalDate startDate() {
+        return LocalDate.of(1995, 09, 15);
     }
 }
 ----
 
 [source,java]
 ----
-public sealed interface Bar extends Foo permits Ber, Becue  {
-    String foo();
+public sealed interface Current extends FooFighter permits Grohl, Other  {
+    Boolean isTheBest();
 }
 ----
 
 [source,java]
 ----
-public non-sealed interface Bar extends Foo {
-    String bar();
+public non-sealed interface Ovni extends FooFighter {
+    String Meh();
 }
 ----
 
+[WARNING]
+====
+If you can't _specifically_ justify the need of non sealed interfaces, don't use them. If you really cannot to do without, please use them with the utmost caution. They are dynamite in your type system.
+====
 
-
-=== Switch expression (opposed to Switch statement)
+== Switch expression (opposed to Switch statement)
 
 [source,java]
 ----
 
 
-import java.time.DayOfWeek;DayOfWeek day = ...
+import com.grunge.FooFighter.Instrument;
+
+Instrument instrument = ...
 return switch day {
-    case DayOfWeek.MONDAY -> "Tired of Weekend"
-    case DayOfWeek.FRIDAY -> "Tired of Week"
+    case Instrument.GUITAR -> "Dave Grohl"
+    case Instrument.DRUM -> "Dave Grohl"
     default -> {
-        // du code blabla
-        return "En forme";
+        // Can you feel it ?
+        return "DAVE GROHLLLLL";
     }
 }
 ----
@@ -108,7 +128,7 @@ if (value instanceof Person person) {
 ----
 return switch (value) {
     case Foo foo -> foo.foo();
-    case Fighter fighter -> fighter.fighter();
+    case FooFighter fighter -> fighter.fighter();
 }
 ----
 
@@ -128,7 +148,7 @@ return switch (value) {
 ----
 return switch (value) {
     case Foo foo -> foo.foo();
-    case Fighter(String name, Instrument instrument, _) -> "%s plays %s".formatted(name, instrument.toString());
+    case Fighter(String name, Instrument instrument, _) -> "%s plays %s".formatted(name, instrument.toString()); //replace name with Dave Grohl
 }
 ----
 

@@ -3,16 +3,16 @@ package com.github.jtama.crazy.dop;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AdviceGiver {
+public class GrohlOMeter {
 
     public static String advices(List<PlayingCard> cards) {
         return cards.stream()
-                .map(AdviceGiver::advice)
+                .map(GrohlOMeter::onTheGrohlScale)
                 .collect(Collectors.joining("," + System.lineSeparator()));
     }
 
 
-    public static String advice(PlayingCard playingCard) {
+    public static String onTheGrohlScale(PlayingCard playingCard) {
         if (playingCard instanceof SuitCard) {
             SuitCard suitCard = (SuitCard) playingCard;
             if (null != suitCard.face()) {
