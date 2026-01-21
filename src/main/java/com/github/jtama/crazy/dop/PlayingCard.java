@@ -1,5 +1,5 @@
 package com.github.jtama.crazy.dop;
 
-public interface PlayingCard {
+public sealed interface PlayingCard permits SuitCard, TrumpCard  {
     Integer index();
 }

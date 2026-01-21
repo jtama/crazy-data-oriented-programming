@@ -13,35 +13,14 @@ public class GrohlOMeter {
 
 
     public static String onTheGrohlScale(PlayingCard playingCard) {
-        if (playingCard instanceof SuitCard) {
-            SuitCard suitCard = (SuitCard) playingCard;
-            if (null != suitCard.face()) {
-                return "The" + suitCard.face().displayName() +
-                        " of " +
-                        suitCard.color().name().toLowerCase() + "(" + suitCard.color().getSymbol() + ")" +
-                        " is strong";
-            }
-
-            switch (playingCard.index()) {
-                case 1:
-                    return "The first of " + suitCard.color().name().toLowerCase() + "(" + suitCard.color().getSymbol() + ") is very weak";
-                case 2:
-                    return "The second of " + suitCard.color().name().toLowerCase() + "(" + suitCard.color().getSymbol() + ") is very weak";
-                case 3:
-                    return "The third of " + suitCard.color().name().toLowerCase() + "(" + suitCard.color().getSymbol() + ") is very weak";
-                case 4:
-                case 5:
-                case 6:
-                    return "The " + suitCard.index() + "th of " + suitCard.color().name().toLowerCase() + "(" + suitCard.color().getSymbol() + ") is still weak";
-                case 7:
-                case 8:
-                case 9:
-                case 10:
-                    return "The" + suitCard.index() + "th of " + suitCard.color().name().toLowerCase() + "(" + suitCard.color().getSymbol() + ") may win you a hand";
-                default:
-                    throw new IllegalStateException("Unexpected value: " + playingCard);
-            }
-        }
-        return "The trump n°" + playingCard.index() + " is strong";
+        return switch (playingCard) {
+            case TrumpCard(Integer idx) -> "The trump n°%s is strong".formatted(idx);
+            case NumberSuitCard suitCard when suitCard.index() == 1 -> "The first of %s(%s) is very weak".formatted(suitCard.color().name().toLowerCase(), suitCard.color().getSymbol());
+            case NumberSuitCard suitCard when suitCard.index() == 2 -> "The second of %s(%s) is very weak".formatted(suitCard.color().name().toLowerCase(), suitCard.color().getSymbol());
+            case NumberSuitCard suitCard when suitCard.index() == 3 -> "The third of %s(%s) is very weak".formatted(suitCard.color().name().toLowerCase(), suitCard.color().getSymbol());
+            case NumberSuitCard suitCard when suitCard.index() < 7 -> "The %sth of %s(%s) is still weak".formatted(suitCard.index(),suitCard.color().name().toLowerCase(), suitCard.color().getSymbol());
+            case NumberSuitCard(Color color, Integer index) -> "The %sth of %s(%s) may win you a hand".formatted(index, color.name().toLowerCase(), color.getSymbol());
+            case RoyalSuitCard(Color color, Face face) -> "The %s of %s(%s) is strong".formatted(face.displayName(), color.name().toLowerCase(), color.getSymbol());
+        };
     }
 }
