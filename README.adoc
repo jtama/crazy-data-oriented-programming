@@ -7,7 +7,7 @@ Big UP to https://github.com/bobocode-projects/java-fundamentals-exercises[boboc
 
 == Record
 
-Records are final, immutable^Or so they say^, provide `getters`, `toString`, `equals` and `hashcode`
+Records are final, immutable _or so they say_, provide `getters`, `toString`, `equals` and `hashcode`
 
 == Declaring a record
 
