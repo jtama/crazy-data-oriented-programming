@@ -17,8 +17,8 @@ class PlayingCardTest {
     @ParameterizedTest
     @MethodSource("numberSuitInputs")
     void testNumberSuitCardConstructorValidatesInputs(Color color, Integer index, String messagePart) {
-        assertThatThrownBy(() -> new NumberSuitCard(color, index))
-                .isInstanceOfAny(IllegalArgumentException.class, NullPointerException.class)
+        assertThatThrownBy(() -> new NumberedSuitCard(color, index))
+                .isInstanceOfAny(IndexOutOfBoundsException.class, IllegalArgumentException.class, NullPointerException.class)
                 .hasMessageContaining(messagePart);
     }
 
@@ -58,11 +58,11 @@ class PlayingCardTest {
 
     static Stream<Arguments> cardProvider() {
         return Stream.of(
-                arguments(new NumberSuitCard(Color.CLUBS, 1), "The first of clubs(♣) is very weak"),
-                arguments(new NumberSuitCard(Color.SPADES, 2), "The second of spades(♠) is very weak"),
-                arguments(new NumberSuitCard(Color.DIAMONDS, 3), "The third of diamonds(♦) is very weak"),
-                arguments(new NumberSuitCard(Color.HEARTS, 5), "The 5th of hearts(♥) is still weak"),
-                arguments(new NumberSuitCard(Color.DIAMONDS, 7), "The 7th of diamonds(♦) may win you a hand"),
+                arguments(new NumberedSuitCard(Color.CLUBS, 1), "The first of clubs(♣) is very weak"),
+                arguments(new NumberedSuitCard(Color.SPADES, 2), "The second of spades(♠) is very weak"),
+                arguments(new NumberedSuitCard(Color.DIAMONDS, 3), "The third of diamonds(♦) is very weak"),
+                arguments(new NumberedSuitCard(Color.HEARTS, 5), "The 5th of hearts(♥) is still weak"),
+                arguments(new NumberedSuitCard(Color.DIAMONDS, 7), "The 7th of diamonds(♦) may win you a hand"),
                 arguments(new RoyalSuitCard(Color.SPADES, Face.JACK), "The Jack of spades(♠) is strong"),
                 arguments(new TrumpCard(21), "The trump n°21 is strong")
         );

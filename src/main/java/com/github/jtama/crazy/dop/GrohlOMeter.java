@@ -37,7 +37,7 @@ public class GrohlOMeter {
                 case 8:
                 case 9:
                 case 10:
-                    return "The" + suitCard.index() + "th of " + suitCard.color().name().toLowerCase() + "(" + suitCard.color().getSymbol() + ") may win you a hand";
+                    return "The " + suitCard.index() + "th of " + suitCard.color().name().toLowerCase() + "(" + suitCard.color().getSymbol() + ") may win you a hand";
                 default:
                     throw new IllegalStateException("Unexpected value: " + playingCard);
             }
