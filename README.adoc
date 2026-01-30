@@ -152,6 +152,22 @@ return switch (value) {
 }
 ----
 
+==== Watch out behind you, that's awful !
 
+[WARNING]
+--
+[source,java]
+----
+public interface When {
 
+    boolean when();
+}
+----
 
+[source,java]
+----
+return switch (value) {
+    case When when when when.when() -> when.when();
+}
+----
+--

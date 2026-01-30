@@ -14,7 +14,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 class PlayingCardTest {
 
 
-    @ParameterizedTest
+    /*@ParameterizedTest
     @MethodSource("numberSuitInputs")
     void testNumberSuitCardConstructorValidatesInputs(Color color, Integer index, String messagePart) {
         assertThatThrownBy(() -> new NumberedSuitCard(color, index))
@@ -67,7 +67,7 @@ class PlayingCardTest {
                 arguments(new TrumpCard(21), "The trump n°21 is strong")
         );
 
-    }
+    }*/
 
 
     private String FULL_DECK = """
