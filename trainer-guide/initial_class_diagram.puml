@@ -1,0 +1,21 @@
+@startuml
+
+
+interface PlayingCard{
+    index()
+}
+
+class SuitCard{
+    index()
+    color()
+    face()
+}
+
+class TrumCard {
+    index()
+}
+
+
+PlayingCard --> SuitCard
+PlayingCard --> TrumCard
+@enduml
