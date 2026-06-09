@@ -8,7 +8,56 @@ More specifically we will focus on _data oriented programming_, that is to say t
 
 *We want to ask more of Java type system.*
 
-== Step 1: Introducing records
+== Initial step
+
+
+[plantuml]
+----
+include::initial_class_diagram.puml[]
+----
+
+== Step 1: Introducing pattern matching
+
+In the `GrohlOMeter` class.
+
+Clean the `GrohlOMeter` (step by step) :
+
+* Use pattern matching in the `instanceof` expression +
+Don't forget to point that `"".formatted()` is a thing now.
+* Mutate the switch to an expression, ie `var result = switch(playingCard) { case x : { yield ... }}`
+
+[NOTE]
+--
+Less code, error-prone, more intents
+--
+
+== Step 2: Introduce dedicated types
+
+[plantuml]
+----
+include::intermediate_class_diagram.puml[]
+----
+
+=== Constrain `TrumpCard`, `RoyalPlayingCard` and `NumberPlayingCard` :
+
+Make sure the correlation between the `Face` and its index is guaranteed by the compiler itself.
+
+* Constraints at this point :
+** `RoyalPlayingCard` 's `Color` and `Face` cannot be `null` : use compact constructors by now
+** `NumberPlayingCard` has no `Face`
+** `TrumpCard` 's `Index` must be between 0 and 21
+** `NumberPlayingCard` 's `Color` and `Index` cannot be `null` and the `Index` must be between 1 and 10
+** `RoyalPlayingCard` 's index is correlated to its `Face` : think about adding the index in the `Face` enum
+
+== Step 3: More pattern matching
+
+In the `GrohlOMeter` class.
+
+* Introduce switch on types. +
+The `onTheGrohlScale` method is now a giant switch.
+* Introduce guarded case patterns, ie `case NumberPlayingCard card when card.index() == 1 ->`
+
+== Step 4: Introducing records
 
 === Make `TrumpCard` a `record`
 
@@ -25,63 +74,26 @@ Underline the following features:
 * At this point, talk about compact constructors only if it has been used by trainees, and make sure it's well understood.
 --
 
-=== Add `RoyalSuitCard` and `NumberSuitCard` as records inheriting from `SuitCard`
+=== Make all type classes a `record`
 
 [plantuml]
 ----
-include::playing_card_inheritance_diagram.puml[]
+include::final_class_diagram.puml[]
 ----
-
-Again asking more from the type system: a suit card with an index lower than 10 should not have a face, and vice versa. This should NOT be a control in a constructor, this should be ensured by the compiler
-
-[WARNING]
---
-- The `SuitCard` class is to become an interface with only one method `Color color();`.
-- Make sure that no constraint is lost during the process
-- Take care to mention that a record cannot be extended because it's final
-- At this point, talk about compact constructors only if it has been used by trainees, and make sure it's well understood.
---
-
-=== Constrain `TrumpCard`, `RoyalPlayingCard` and `NumberPlayingCard` :
-
-Make sure the correlation between the `Face` and its index is guaranteed by the compiler itself.
-
-* Constraints at this point :
-** `RoyalPlayingCard` 's `Color` and `Face` cannot be `null` : use compact constructors by now
-** `NumberPlayingCard` has no `Face`
-** `TrumpCard` 's `Index` must be between 0 and 21
-** `NumberPlayingCard` 's `Color` and `Index` cannot be `null` and the `Index` must be between 1 and 10
-** `RoyalPlayingCard` 's index is correlated to its `Face` : think about adding the index in the `Face` enum
-
-Uncomment the tests, they should pass by now. \o/
-You have your safeguard.
 
 === Showing the limitation of open heritage
 
-Ask for an hypothetical `Joker` class inheriting from `PlayingCard`
+Ask for an hypothetical `Excuse` class inheriting from `PlayingCard`
 
 Display it using `GrohlOMeter` and observe the potential issue.
 
-== Step 2: Introducing sealed interfaces
+== Step 5: Introducing sealed interfaces
 
-Start solving the *Joker case*:
+Start solving the *Excuse case*:
 
-* Explain the sealed interface hierarchie represent a close world, or at least explicit their extension points.
+* Explain the sealed interface hierarchy represent a close world, or at least explicit their extension points.
 * Constrain `PlayingCard` to be either a `SuitCard` or a `TrumpCard` using a sealed interface
 * Make `SuitCard` a sealed interface as well
-
-== Step 3: Introducing pattern matching
-
-All this part takes place in the `GrohlOMeter` class.
-
-Clean the `GrohlOMeter` (step by step) :
-
-* Use pattern matching in the `instanceof` expression +
-Don't forget to point that `"".formatted()` is a thing now.
-* Mutate the switch to an expression, ie `var result = switch(playingCard) { case x : { yield ... }}`
-* Introduce switch on types. +
-The `advice` method is now a giant switch.
-* Introduce guarded case patterns, ie `case NumberPlayingCard card when card.index() == 1 ->`
 * Add destructuration to the switch,ie `case TrumpCard(Integer idx) ->` or `case NumberSuitCard(Integer idx, _) ->`
 
 [WARNING]

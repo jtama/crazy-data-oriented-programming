@@ -11,13 +11,13 @@ interface SuitCard{
     Color: color()
 }
 
-record RoyalSuitCard {
+class RoyalSuitCard {
   face()
   index()
   color()
 }
 
-record NumberSuitCard {
+class NumberSuitCard {
   index()
   color()
 }
@@ -30,7 +30,7 @@ enum Color {
     String: symbol()
 }
 
-record TrumCard {
+class TrumCard {
     Integer: index()
 }
 

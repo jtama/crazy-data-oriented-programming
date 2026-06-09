@@ -1,21 +1,30 @@
 @startuml
 
-
 interface PlayingCard{
-    index()
+    Integer: index()
 }
 
 class SuitCard{
-    index()
-    color()
+    Integer: index()
+    Color: color()
     face()
 }
 
+enum Face {
+    String: displayName()
+}
+
+enum Color {
+    String: symbol()
+}
+
 class TrumCard {
-    index()
+    Integer: index()
 }
 
 
 PlayingCard --> SuitCard
 PlayingCard --> TrumCard
+SuitCard --> Color
+SuitCard --> Face
 @enduml

@@ -166,8 +166,10 @@ public interface When {
 
 [source,java]
 ----
-return switch (value) {
-    case When when when when.when() -> when.when();
+boolean trolololo(){
+ return switch (value){
+     case When when when when.when() -> when.when();
+ };
 }
 ----
 --
